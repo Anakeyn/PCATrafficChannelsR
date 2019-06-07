@@ -41,7 +41,7 @@ library(FactoMineR) #pour ACP
 library(factoextra)  #compléments ACP FactoMineR
 
 ##########################################################################
-# Récupération du Jeu de données nettoyé des pages
+# Récupération des fichiers
 ##########################################################################
 dfPageViews <- read.csv("dfPageViews.csv", header=TRUE, sep=";") 
 #str(dfPageViews) #verif
@@ -92,8 +92,8 @@ summary(res.pca) #resumé des données
 
 
 #############################Plots Simples individus et variables.
-plot(res.pca, choix = "ind")  #, autoLab = "yes"
-plot(res.pca, choix = "var")  #, autoLab = "yes"
+#plot(res.pca, choix = "ind")  #individus
+#plot(res.pca, choix = "var")  #variables
 
 
 
@@ -107,7 +107,7 @@ ggpubr::ggpar(ScreePlot,
               caption = "ScreePlot pour toutes les Pages Vues")
 ggsave(filename = "PV-ScreePlot.jpg",  dpi="print") #sauvegarde du graphique
 
-#########################   ScreePlot ################################################
+#########################  Diagramme des variables  ################################################
 # Colorer en fonction du cos2: qualité de représentation
 VarPlot <- fviz_pca_var(res.pca, col.var = "cos2",
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
@@ -151,7 +151,7 @@ BasePVDataForACP <-  dfBasePVChannel[, c("pagePath", "channel")]  %>%   #on ne g
          sep = NULL)  #eclatement du facteur channel en variables 
 
 
-#Calculd e la
+#Calcul de la
 res.pca = PCA(BasePVDataForACP[, -1], scale.unit=TRUE, ncp=5, graph=F) 
 summary(res.pca) #resumé des données
 
@@ -183,7 +183,7 @@ ggsave(filename = "Base-PV-VarPlot.jpg",  dpi="print") #sauvegarde du graphique
 #regardons pour le trafic Direct  Marketing uniquement i.e le traffic dont
 # la source a dirigé vers une page Articles Marketing 
 ##########################################################################
-#Construtcion du trafic Direct Marketing
+#Construction du trafic Direct Marketing
 #on garde uniquement les landingPagePath de nos articles  : 
 #DM = Direct Marketing
 patternArticlesToKeep <- unique(myArticles$pagePath)
